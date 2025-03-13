@@ -1,2 +1,7 @@
 backend/node_modules
 backend/.env
+README.md
+backend/Dockerfile
+.git
+backend/.gitignore
+backend/.env.example

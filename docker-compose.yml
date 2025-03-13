@@ -1,0 +1,25 @@
+services:
+  api:
+    container_name: api
+    depends_on:
+      - mysql
+    build:
+      context: ./backend
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/app/backend
+    env_file:
+      - /backend/.env
+  mysql:
+    container_name: mysql
+    image: mysql:8
+    restart: always
+    env_file:
+      - /backend/.env
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+volumes:
+  mysql_data:
