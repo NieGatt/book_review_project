@@ -2,7 +2,7 @@
 CREATE TABLE `User` (
     `id` VARCHAR(36) NOT NULL,
     `photo` VARCHAR(500) NULL,
-    `nickname` VARCHAR(50) NULL DEFAULT 'annonymous',
+    `nickname` VARCHAR(50) NULL DEFAULT 'anonymous',
     `email` VARCHAR(50) NOT NULL,
     `password` VARCHAR(70) NOT NULL,
 

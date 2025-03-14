@@ -20,5 +20,6 @@
       "watchDirectory": "dynamicPriorityPolling",
       "excludeDirectories": ["**/node_modules", "dist"]
     },
-    "exclude": ["node_modules", "tests", "dist"]  
+    "exclude": ["node_modules", "tests", "dist"],
+    "include": ["src"]
   }
