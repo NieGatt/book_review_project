@@ -13,4 +13,5 @@ model User {
   nickname String? @default("anonymous") @db.VarChar(50)
   email    String  @unique @db.VarChar(50)
   password String  @db.VarChar(70)
+  vToken   String? @db.Text
 }
