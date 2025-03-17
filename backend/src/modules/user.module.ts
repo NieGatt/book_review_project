@@ -13,7 +13,7 @@ export class UserModule implements NestModule {
             .apply(AuthMiddleware)
             .exclude(
                 { path: "user/:id", method: RequestMethod.GET },
-                { path: "user", method: RequestMethod.PUT }
+                { path: "user/reset-password", method: RequestMethod.PUT }
             )
             .forRoutes("user")
     }

@@ -1,7 +1,6 @@
-import { Get, Put, Controller, Req, Body, Param, UseGuards } from "@nestjs/common"
+import { Get, Put, Controller, Req, Body, Param, UseGuards, ParseUUIDPipe } from "@nestjs/common"
 import { Request } from "express"
-import { AuthUserDto } from "src/dto/auth-user.dto"
-import { ResetPasswordDto } from "src/dto/reset-password.dto"
+import { PasswordDto } from "src/dto/password-dto"
 import { VTokenGuard } from "src/guards/vtoken.guard"
 import { UserService } from "src/services/user.service"
 
@@ -10,20 +9,23 @@ export class UserController {
     constructor(private userService: UserService) { }
 
     @Get()
-    async recoverUserData(@Req() req: any) {
+    async findData(@Req() req: any) {
         const data = await this.userService.find(req.user.id)
         return data
     }
 
-    @Get(":id")
-    async findSomeUser(@Req() req: Request, @Param("id") id: string) {
-        const data = await this.userService.find(id)
+    @Get(":uuid")
+    async findUsersData(
+        @Req() req: Request,
+        @Param("uuid", new ParseUUIDPipe({ version: "4" })) uuid: string
+    ) {
+        const data = await this.userService.find(uuid)
         return data
     }
 
-    @Put()
+    @Put("reset-password")
     @UseGuards(VTokenGuard)
-    async resetPassword(@Req() req: any, @Body() dto: ResetPasswordDto) {
+    async resetPassword(@Req() req: any, @Body() dto: PasswordDto) {
         await this.userService.resetPassword(req.user.id, dto.password)
     }
 }
