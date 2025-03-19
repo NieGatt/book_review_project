@@ -3,10 +3,8 @@ import { IsEmail, IsOptional, IsString, Length, Matches } from "class-validator"
 export class FieldsDto {
     @IsOptional()
     @Length(3, 50)
-    nickname?: string;
-
-    @IsOptional()
-    photo?: File;
+    @Matches(/[a-zA-ZÀ-ú\s_]/)
+    nickname: string;
 
     @IsString()
     @IsEmail()
