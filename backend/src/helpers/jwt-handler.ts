@@ -1,30 +1,30 @@
 import * as jwt from "jsonwebtoken"
-import { Injectable, UnauthorizedException } from "@nestjs/common"
+import { Injectable } from "@nestjs/common"
 import "dotenv/config"
 
 @Injectable()
 export class JwtHandler {
-    private accessSecret = process.env.JWT_ACCESS_SECRET
-    private vTokenSecret = process.env.JWT_VTOKEN_SECRET
+    private readonly access_secret = process.env.JWT_ACCESS_SECRET
+    private readonly vToken_secret = process.env.JWT_VTOKEN_SECRET
 
     createToken(id: string): string {
-        return jwt.sign({ id: id }, this.accessSecret, {
+        return jwt.sign({ id: id }, this.access_secret, {
             expiresIn: "1d"
         })
     }
 
     validateAccessToken(token: string) {
-        return this.validate(token, this.accessSecret)
+        return this.validate(token, this.access_secret)
     }
 
     createVToken(id: string): string {
-        return jwt.sign({ id: id }, this.vTokenSecret, {
+        return jwt.sign({ id: id }, this.vToken_secret, {
             expiresIn: "12h"
         })
     }
 
     validateVToken(token: string) {
-        return this.validate(token, this.vTokenSecret)
+        return this.validate(token, this.vToken_secret)
     }
 
     private validate(token: string, secret: string): string {

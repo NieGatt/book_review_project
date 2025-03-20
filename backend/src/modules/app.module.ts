@@ -4,9 +4,10 @@ import { AuthModule } from "./auth.module";
 import { UserModule } from "./user.module";
 import { AuthMiddleware } from "src/middlewares/auth-middleware";
 import { UserController } from "src/controllers/user.controller";
+import { ReviewModule } from "./review.module";
 
 @Module({
-    imports: [HelperModule, AuthModule, UserModule]
+    imports: [HelperModule, AuthModule, UserModule, ReviewModule]
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {

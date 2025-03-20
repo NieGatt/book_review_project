@@ -8,10 +8,30 @@ datasource db {
 }
 
 model User {
-  id       String  @unique @db.VarChar(36)
-  photo    String? @unique @db.VarChar(500)
-  nickname String? @default("anonymous") @db.VarChar(50)
-  email    String  @unique @db.VarChar(50)
-  password String  @db.VarChar(70)
-  vToken   String? @db.Text
+  id        String      @id @unique @db.VarChar(36)
+  photo     String?     @db.VarChar(500)
+  nickname  String?     @default("anonymous") @db.VarChar(50)
+  email     String      @unique @db.VarChar(50)
+  password  String      @db.VarChar(70)
+  vToken    String?     @db.Text
+  reviews   Review[]
+  watchList WatchList[]
+}
+
+model Review {
+  movieId Int
+  rate    Float  @default(0.0)
+  comment String @db.Text
+  userId  String @db.VarChar(36)
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, movieId])
+}
+
+model WatchList {
+  userId  String @db.VarChar(36)
+  movieId Int
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, movieId])
 }
