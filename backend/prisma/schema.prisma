@@ -20,7 +20,6 @@ model User {
 
 model Review {
   movieId Int
-  rate    Float  @default(0.0)
   comment String @db.Text
   userId  String @db.VarChar(36)
   user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
