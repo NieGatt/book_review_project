@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaHandler } from "src/helpers/prisma-handler";
 import { TmdbApiHandler } from "src/helpers/tmdb-api-handler";
-import { CategoryEnum } from "src/enum/movie-category-enum";
 import { IMovieParams } from "src/interfaces/imovie-params";
 
 @Injectable()
@@ -16,6 +15,8 @@ export class MovieService {
     }
 
     async findMovieData(id: number) {
-        return await this.tmdbApiHandler.findMovieData(id)
+        const movie = await this.tmdbApiHandler.findMovieData(id)
+        const reviews = await this.prisma.review.findMany({ where: { movieId: id } });
+        return { movie, reviews }
     }
 }

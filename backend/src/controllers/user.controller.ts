@@ -18,15 +18,6 @@ export class UserController {
         return data
     }
 
-    @Get(":uuid")
-    async findUsersData(
-        @Req() req: Request,
-        @Param("uuid", new ParseUUIDPipe({ version: "4" })) uuid: string
-    ) {
-        const data = await this.userService.find(uuid)
-        return data
-    }
-
     @Put("reset-password")
     @UseGuards(VTokenGuard)
     async resetPassword(@Req() req: any, @Body() dto: PasswordDto) {

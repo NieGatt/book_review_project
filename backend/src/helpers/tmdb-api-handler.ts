@@ -11,8 +11,6 @@ export class TmdbApiHandler {
     private readonly api_key = process.env.TMDB_KEY;
     private readonly baseUrl = 'https://api.themoviedb.org/3/'
 
-    constructor(private prisma: PrismaHandler) { }
-
     async movies(params: IMovieParams) {
         let url = this.baseUrl
         let result: IMoviesData | {} = {}
@@ -60,7 +58,6 @@ export class TmdbApiHandler {
         const url2 = `${this.baseUrl}movie/${id}/credits?api_key=${this.api_key}`;
 
         let details = {};
-        let reviews = {};
         let team = {};
 
         const response = await fetch(url);
@@ -88,11 +85,27 @@ export class TmdbApiHandler {
                 cast: data2.cast,
                 crew: data2.crew
             }
-
-            const review = await this.prisma.review.findMany({ where: { movieId: id } });
-            reviews = review
         }
 
-        return { details, reviews, team }
+        return { details, team }
+    }
+
+    async list(ids: number[]) {
+        const movies = [];
+        for (const id of ids) {
+            const res = await fetch(`${this.baseUrl}movie/${id}`);
+            const data = await res.json();
+
+            const movie = {
+                id: data.id,
+                title: data.title,
+                poster: data.backdrop_path,
+                overview: data.overview
+            }
+
+            movies.push(movie);
+        }
+
+        return movies
     }
 }
