@@ -1,18 +1,31 @@
 services:
-  api:
-    container_name: api
+  nestjs-api:
+    container_name: nestjs-api
     depends_on:
-      - mysql
+      - db-mysql
     build:
       context: ./backend
     ports:
       - 8000:8000
     volumes:
-      - ./backend:/app/backend
+      - ./backend:/app
+      - /app/node_modules
     env_file:
       - /backend/.env
-  mysql:
-    container_name: mysql
+
+  react-ui:
+    container_name: react-ui
+    depends_on:
+      - nestjs-api
+    build:
+      context: ./frontend
+    ports:
+      - 5173:5173
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+  db-mysql:
+    container_name: db-mysql
     image: mysql:8
     restart: always
     env_file:

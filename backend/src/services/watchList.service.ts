@@ -17,7 +17,7 @@ export class WatchListService {
 
         if (data.length === 0) return []
 
-        const movieIds = data.map(obj => obj.movieId);
+        const movieIds = data.map((obj: { movieId: number }) => obj.movieId);
 
         const watchList = await this.tmdbApiHandler.list(movieIds)
         return watchList

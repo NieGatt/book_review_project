@@ -1,15 +1,21 @@
--- DropIndex
-DROP INDEX `User_photo_key` ON `User`;
+-- CreateTable
+CREATE TABLE `User` (
+    `id` VARCHAR(36) NOT NULL,
+    `photo` VARCHAR(500) NULL,
+    `nickname` VARCHAR(50) NULL DEFAULT 'anonymous',
+    `email` VARCHAR(50) NOT NULL,
+    `password` VARCHAR(70) NOT NULL,
+    `vToken` TEXT NULL,
 
--- AlterTable
-ALTER TABLE `User` ADD PRIMARY KEY (`id`);
+    UNIQUE INDEX `User_id_key`(`id`),
+    UNIQUE INDEX `User_email_key`(`email`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Review` (
     `movieId` INTEGER NOT NULL,
-    `rate` DOUBLE NOT NULL DEFAULT 0.0,
     `comment` TEXT NOT NULL,
-    `recommend` BOOLEAN NOT NULL DEFAULT false,
     `userId` VARCHAR(36) NOT NULL,
 
     PRIMARY KEY (`userId`, `movieId`)
