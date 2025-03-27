@@ -1,5 +1,10 @@
+import { UserContextProvider } from "./context/user-context"
+import { AppRoutes } from "./routes/routes"
+
 function App() {
-  return <h1 className="text-xl">Hello world!</h1>
+  return <UserContextProvider>
+    {<AppRoutes />}
+  </UserContextProvider>
 }
 
 export default App
