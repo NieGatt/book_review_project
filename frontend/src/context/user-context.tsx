@@ -22,8 +22,6 @@ const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }
 
-    console.log(user)
-
     useEffect(() => {
         (async () => await fetchFunc())()
     }, [])
@@ -35,6 +33,6 @@ const UserContextProvider = ({ children }: { children: React.ReactNode }) => {
     )
 }
 
-const user = () => useContext(UserContext)
+const useUserData = () => useContext(UserContext)
 
-export { user, UserContextProvider }
+export { useUserData, UserContextProvider }
